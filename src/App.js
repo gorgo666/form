@@ -1,25 +1,35 @@
+/** @format */
+
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import emailjs from 'emailjs-com';
 
 function App() {
+  function sendEmail(e) {
+    e.preventDefault();
+
+    emailjs
+      .sendForm('gmail', 'gorgo', e.target, 'user_Upop28FjXOW2P40U4U0WF')
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form className='contact-form' onSubmit={sendEmail}>
+      <input type='hidden' name='contact_number' />
+      <label>Name</label>
+      <input type='text' name='user_name' />
+      <label>Email</label>
+      <input type='email' name='user_email' />
+      <label>Message</label>
+      <textarea name='message' />
+      <input type='submit' value='Send' />
+    </form>
   );
 }
 
